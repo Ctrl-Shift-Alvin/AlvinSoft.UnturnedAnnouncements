@@ -1,0 +1,127 @@
+# See https://openmod.github.io/openmod-docs/devdoc/concepts/localization.html
+# You can delete this file if you do not need translations
+
+plugin_events:
+  plugin_start: "AlvinSoft.Announcements was started!"
+  plugin_stop: "AlvinSoft.Announcements was stopped!"
+
+join:
+    join_messages:
+        0: "Welcome to the server, {Player}!"
+        1: "Hello {Player}, enjoy your stay!"
+        2: "Greetings {Player}, have fun playing!"
+    join_announcements:
+        0: "{Player} has joined the server!"
+        1: "{Player} is now online!"
+        2: "{Player} has entered the game!"
+
+leave:
+    leave_messages:
+        0: "Goodbye {Player}, see you next time!"
+        1: "Farewell {Player}, take care!"
+        2: "See you later {Player}, come back soon!"
+    leave_announcements:
+        0: "{Player} has left the server!"
+        1: "{Player} is now offline!"
+        2: "{Player} has exited the game!"
+
+ban:
+    0: "{Player} was banned!"
+    1: "{Player} has been banned from the server!"
+    2: "{Player} is now banned!"
+
+death:
+    bleeding:
+        0: ""
+        1: ""
+    bones:
+        0: ""
+        1: ""
+    freezing:
+        0: ""
+        1: ""
+    burning:
+        0: ""
+        1: ""
+    food:
+        0: ""
+        1: ""
+    water:
+        0: ""
+        1: ""
+    gun:
+        0: ""
+        1: ""
+    melee:
+        0: ""
+        1: ""
+    zombie:
+        0: ""
+        1: ""
+    animal:
+        0: ""
+        1: ""
+    suicide:
+        0: ""
+        1: ""
+    kill:
+        0: ""
+        1: ""
+    infection:
+        0: ""
+        1: ""
+    punch:
+        0: ""
+        1: ""
+    breath:
+        0: ""
+        1: ""
+    roadkill:
+        0: ""
+        1: ""
+    vehicle:
+        0: ""
+        1: ""
+    grenade:
+        0: ""
+        1: ""
+    shred:
+        0: ""
+        1: ""
+    landmine:
+        0: ""
+        1: ""
+    arena:
+        0: ""
+        1: ""
+    missile:
+        0: ""
+        1: ""
+    charge:
+        0: ""
+        1: ""
+    splash:
+        0: ""
+        1: ""
+    sentry:
+        0: ""
+        1: ""
+    acid:
+        0: ""
+        1: ""
+    boulder:
+        0: ""
+        1: ""
+    burner:
+        0: ""
+        1: ""
+    spit:
+        0: ""
+        1: ""
+    spark:
+        0: ""
+        1: ""
+    default:
+        0: ""
+        1: ""
+    
