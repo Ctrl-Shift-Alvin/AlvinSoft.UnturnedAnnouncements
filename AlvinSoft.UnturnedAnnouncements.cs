@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -10,11 +11,9 @@ using OpenMod.API.Users;
 using OpenMod.Core.Users.Events;
 using OpenMod.Unturned.Players.Life.Events;
 using OpenMod.Unturned.Players.Bans.Events;
-using static System.Collections.Specialized.BitVector32;
-using System.Linq;
 using SDG.Unturned;
-using System.Collections.Generic;
-using NuGet.Protocol.Plugins;
+using Steamworks;
+using Humanizer;
 
 // For more, visit https://openmod.github.io/openmod-docs/devdoc/guides/getting-started.html
 [assembly: PluginMetadata("AlvinSoft.UnturnedAnnouncements", DisplayName = "AlvinSoft Unturned Announcements")]
@@ -50,32 +49,12 @@ namespace AlvinSoft {
 
             await UniTask.SwitchToMainThread();
 
-            if (m_Configuration.GetValue<bool>("join_messages") == true) {
-                m_EventBus.Subscribe<IUserConnectedEvent>(this, async (sender, obj, ev) => {
-
-                    string message = m_StringLocalizer.GetStrings("join:join_messages", new { Player = ev.User.DisplayName }).RandomIndex();
-
-                    await ev.User.PrintMessageAsync(message, System.Drawing.Color.White);
-
-                });
-            }
-
             if (m_Configuration.GetValue<bool>("join_announcements") == true) {
                 m_EventBus.Subscribe<IUserConnectedEvent>(this, async (sender, obj, ev) => {
 
                     string message = m_StringLocalizer.GetStrings("join:join_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
 
                     await m_UserManager.BroadcastAsync(message, System.Drawing.Color.White);
-
-                });
-            }
-
-            if (m_Configuration.GetValue<bool>("leave_messages") == true) {
-                m_EventBus.Subscribe<IUserDisconnectedEvent>(this, async (sender, obj, ev) => {
-
-                    string message = m_StringLocalizer.GetStrings("leave:leave_messages", new { Player = ev.User.DisplayName }).RandomIndex();
-
-                    await ev.User.PrintMessageAsync(message, System.Drawing.Color.White);
 
                 });
             }
@@ -91,43 +70,52 @@ namespace AlvinSoft {
             }
 
             if (m_Configuration.GetValue<bool>("death_announcements") == true) {
+
                 m_EventBus.Subscribe<UnturnedPlayerDeathEvent>(this, async (sender, obj, ev) => {
+                    string victimName = ev.Player.SteamPlayer.playerID.playerName;
+
+                    string? killerName = null;
+                    if (ev.Instigator != CSteamID.Nil) {
+                        var killerPlayer = PlayerTool.getPlayer(ev.Instigator);
+                        if (killerPlayer != null) {
+                            killerName = killerPlayer.channel.owner.playerID.characterName;
+                        }
+                    }
+                    killerName ??= m_StringLocalizer["unknown_player"];
 
                     string message = ev.DeathCause switch {
-                        EDeathCause.BLEEDING => m_StringLocalizer.GetStrings("death:bleeding", new {  Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.BONES => m_StringLocalizer.GetStrings("death:bones", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.FREEZING => m_StringLocalizer.GetStrings("death:freezing", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.BURNING => m_StringLocalizer.GetStrings("death:burning", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.FOOD => m_StringLocalizer.GetStrings("death:food", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.WATER => m_StringLocalizer.GetStrings("death:water", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.GUN => m_StringLocalizer.GetStrings("death:gun", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.MELEE => m_StringLocalizer.GetStrings("death:melee", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.ZOMBIE => m_StringLocalizer.GetStrings("death:zombie", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.ANIMAL => m_StringLocalizer.GetStrings("death:animal", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SUICIDE => m_StringLocalizer.GetStrings("death:suicide", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.KILL => m_StringLocalizer.GetStrings("death:kill", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.INFECTION => m_StringLocalizer.GetStrings("death:infection", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.PUNCH => m_StringLocalizer.GetStrings("death:punch", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.BREATH => m_StringLocalizer.GetStrings("death:breath", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.ROADKILL => m_StringLocalizer.GetStrings("death:roadkill", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.VEHICLE => m_StringLocalizer.GetStrings("death:vehicle", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.GRENADE => m_StringLocalizer.GetStrings("death:grenade", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SHRED => m_StringLocalizer.GetStrings("death:shred", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.LANDMINE => m_StringLocalizer.GetStrings("death:landmine", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.ARENA => m_StringLocalizer.GetStrings("death:arena", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.MISSILE => m_StringLocalizer.GetStrings("death:missile", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.CHARGE => m_StringLocalizer.GetStrings("death:charge", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SPLASH => m_StringLocalizer.GetStrings("death:splash", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SENTRY => m_StringLocalizer.GetStrings("death:sentry", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.ACID => m_StringLocalizer.GetStrings("death:acid", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.BOULDER => m_StringLocalizer.GetStrings("death:boulder", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.BURNER => m_StringLocalizer.GetStrings("death:burner", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SPIT => m_StringLocalizer.GetStrings("death:spit", new { Player = ev.Player. }).RandomIndex(),
-                        EDeathCause.SPARK => m_StringLocalizer.GetStrings("death:spark", new { Player = ev.Player. }).RandomIndex(),
-                        _ => m_StringLocalizer.GetStrings("death:default", new { Player = ev.Player. }).RandomIndex(),
+                        EDeathCause.BLEEDING => m_StringLocalizer.GetStrings("death:bleeding", new {  VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.BONES => m_StringLocalizer.GetStrings("death:bones", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.FREEZING => m_StringLocalizer.GetStrings("death:freezing", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.BURNING => m_StringLocalizer.GetStrings("death:burning", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.FOOD => m_StringLocalizer.GetStrings("death:food", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.WATER => m_StringLocalizer.GetStrings("death:water", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.GUN => m_StringLocalizer.GetStrings("death:gun", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.MELEE => m_StringLocalizer.GetStrings("death:melee", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.ZOMBIE => m_StringLocalizer.GetStrings("death:zombie", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.ANIMAL => m_StringLocalizer.GetStrings("death:animal", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SUICIDE => m_StringLocalizer.GetStrings("death:suicide", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.KILL => m_StringLocalizer.GetStrings("death:kill", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.INFECTION => m_StringLocalizer.GetStrings("death:infection", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.PUNCH => m_StringLocalizer.GetStrings("death:punch", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.BREATH => m_StringLocalizer.GetStrings("death:breath", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.ROADKILL => m_StringLocalizer.GetStrings("death:roadkill", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.VEHICLE => m_StringLocalizer.GetStrings("death:vehicle", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.GRENADE => m_StringLocalizer.GetStrings("death:grenade", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SHRED => m_StringLocalizer.GetStrings("death:shred", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.LANDMINE => m_StringLocalizer.GetStrings("death:landmine", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.ARENA => m_StringLocalizer.GetStrings("death:arena", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.MISSILE => m_StringLocalizer.GetStrings("death:missile", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.CHARGE => m_StringLocalizer.GetStrings("death:charge", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SPLASH => m_StringLocalizer.GetStrings("death:splash", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SENTRY => m_StringLocalizer.GetStrings("death:sentry", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.ACID => m_StringLocalizer.GetStrings("death:acid", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.BOULDER => m_StringLocalizer.GetStrings("death:boulder", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.BURNER => m_StringLocalizer.GetStrings("death:burner", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SPIT => m_StringLocalizer.GetStrings("death:spit", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        EDeathCause.SPARK => m_StringLocalizer.GetStrings("death:spark", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
+                        _ => m_StringLocalizer.GetStrings("death:default", new { VictimName = victimName, DamageSourceName = killerName }).RandomIndex(),
                     };
-
-                    // 
 
                     await m_UserManager.BroadcastAsync(message, System.Drawing.Color.Red);
 
@@ -137,7 +125,40 @@ namespace AlvinSoft {
             if (m_Configuration.GetValue<bool>("ban_announcements:enable") == true) {
                 m_EventBus.Subscribe<UnturnedPlayerBannedEvent>(this, async (sender, obj, ev) => {
 
-                    string message = m_StringLocalizer.GetStrings("ban").RandomIndex();
+                    bool includeDuration = m_Configuration.GetValue<bool>("ban_announcements:include_duration");
+                    bool includeReason = m_Configuration.GetValue<bool>("ban_announcements:include_reason");
+                    var playerObject = PlayerTool.getPlayer(ev.BannedPlayer);
+                    string Player;
+                    if (playerObject != null) {
+                        Player = playerObject.channel.owner.playerID.characterName;
+                    } else {
+                        Player = m_StringLocalizer["unknown_player"];
+                    }
+                    string Duration = ev.Duration == 0 ? m_StringLocalizer.GetStrings("ban:permanent_duration_string").RandomIndex() : TimeSpan.FromSeconds(ev.Duration).Humanize();
+                    string Reason = string.IsNullOrEmpty(ev.Reason) ? m_StringLocalizer["ban:no_reason_string"] : ev.Reason;
+                    string message;
+                    if (includeDuration) {
+
+                        if (includeReason) {
+
+                            message = m_StringLocalizer.GetStrings("ban:with_both", new { Player, Duration, Reason }).RandomIndex();
+
+                        } else {
+
+                            message = m_StringLocalizer.GetStrings("ban:with_duration", new { Player, Duration }).RandomIndex();
+
+                        }
+
+                    } else if (includeReason) {
+
+                        message = m_StringLocalizer.GetStrings("ban:with_reason", new { Player, Reason }).RandomIndex();
+
+                    } else {
+
+                        message = m_StringLocalizer.GetStrings("ban:without_info", new { Player }).RandomIndex();
+
+                    }
+
 
                     await m_UserManager.BroadcastAsync(message, System.Drawing.Color.Red);
 
@@ -158,6 +179,7 @@ namespace AlvinSoft {
 
             int i = 0;
             while (true) {
+
                 string str = stringRoot[$"{key}:{i}", arguments];
 
                 if (string.IsNullOrEmpty(str))

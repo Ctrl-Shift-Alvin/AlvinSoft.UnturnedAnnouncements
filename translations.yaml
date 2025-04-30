@@ -26,9 +26,29 @@ leave:
         2: "{Player} has exited the game!"
 
 ban:
-    0: "{Player} was banned!"
-    1: "{Player} has been banned from the server!"
-    2: "{Player} is now banned!"
+    without_info:
+        0: "{Player} was banned!"
+        1: "{Player} has been banned from the server!"
+        2: "{Player} is now banned!"
+    with_duration:
+        0: "{Player} was banned for {Duration}!"
+        1: "{Player} has been banned from the server for {Duration}!"
+        2: "{Player} is now banned for {Duration}!"
+    with_reason:
+        0: "{Player} was banned for '{Reason}'!"
+        1: "{Player} has been banned from the server for '{Reason}'!"
+        2: "{Player} is now banned for '{Reason}'!"
+    with_both:
+        0: "{Player} was banned for {Duration}, for '{Reason}'!"
+        1: "{Player} has been banned from the server for {Duration}, for '{Reason}'!"
+        2: "{Player} is now banned for {Duration}, for '{Reason}'!"
+
+    permanent_duration_string:
+        0: "permanently"
+        1: "forever"
+        2: "for life"
+
+    no_reason_string: "something"
 
 death:
     bleeding:
@@ -124,4 +144,7 @@ death:
     default:
         0: ""
         1: ""
+
+unknown_player: "unknown"
+
     
