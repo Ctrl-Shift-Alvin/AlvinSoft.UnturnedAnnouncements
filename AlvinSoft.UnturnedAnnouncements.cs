@@ -179,7 +179,6 @@ namespace AlvinSoft {
 
             }
 
-
             await m_UserManager.BroadcastAsync(message, System.Drawing.Color.Red);
 
         }
@@ -192,9 +191,10 @@ namespace AlvinSoft {
             int i = 0;
             while (true) {
 
-                string str = stringRoot[$"{key}:{i}", arguments];
+                string name = $"{key}:{i}";
+                string str = stringRoot[name, arguments];
 
-                if (string.IsNullOrEmpty(str))
+                if (str == name || string.IsNullOrEmpty(str))
                     break;
 
                 strings.Add(str);
@@ -203,11 +203,14 @@ namespace AlvinSoft {
 
             return strings.ToArray();
         }
+
         public static string RandomIndex(this string[] array) {
+
             if (array == null || array.Length == 0)
                 return string.Empty;
 
             return array[UnityEngine.Random.Range(0, array.Length)];
+
         }
     }
 }
