@@ -16,10 +16,12 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageAuthor>AlvinSoft</PackageAuthor>
 		<PackageTags>openmod openmod-plugin unturned</PackageTags>
-		<Version>2.0.1</Version>
+		<Version>2.0.2</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateNugetPackage>true</GenerateNugetPackage>
+		<RepositoryUrl>https://github.com/Ctrl-Shift-Alvin/AlvinSoft.UnturnedAnnouncements</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
