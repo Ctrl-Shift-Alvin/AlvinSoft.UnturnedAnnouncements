@@ -49,9 +49,134 @@ namespace AlvinSoft {
         }
 
 
+        private bool ConfigCheck() {
+
+            string[] configKeys = new string[] {
+                "join:enable",
+                "join:color",
+                "leave:enable",
+                "leave:color",
+                "death:enable",
+                "death:color",
+                "ban:enable",
+                "ban:include_duration",
+                "ban:include_reason",
+                "ban:color"
+            };
+
+            foreach (string key in configKeys) {
+
+                string? str = m_Configuration[key];
+                if (str == null || string.IsNullOrEmpty(str) || str == key) {
+
+                    m_Logger.LogError($"AlvinSoft.UnturnedAnnouncements failed to read the config key '{key}'!", key);
+                    return false;
+
+                }
+            }
+
+            return true;
+
+        }
+
+        private bool TranslationsCheck() {
+
+            List<string> strings = new List<string>() {
+                "plugin_events:plugin_start",
+                "plugin_events:plugin_stop",
+                "unknown_player"
+            };
+
+            if (m_Configuration.GetValue<bool>("join_announcements:enable")) {
+                strings.Add("join:0");
+            }
+            if (m_Configuration.GetValue<bool>("leave_announcements:enable")) {
+                strings.Add("leave:0");
+            }
+            if (m_Configuration.GetValue<bool>("death_announcements:enable")) {
+                strings.Add("death:bleeding");
+                strings.Add("death:bones");
+                strings.Add("death:freezing");
+                strings.Add("death:burning");
+                strings.Add("death:food");
+                strings.Add("death:water");
+                strings.Add("death:gun");
+                strings.Add("death:melee");
+                strings.Add("death:zombie");
+                strings.Add("death:animal");
+                strings.Add("death:suicide");
+                strings.Add("death:kill");
+                strings.Add("death:infection");
+                strings.Add("death:punch");
+                strings.Add("death:breath");
+                strings.Add("death:roadkill");
+                strings.Add("death:vehicle");
+                strings.Add("death:grenade");
+                strings.Add("death:shred");
+                strings.Add("death:landmine");
+                strings.Add("death:arena");
+                strings.Add("death:missile");
+                strings.Add("death:charge");
+                strings.Add("death:splash");
+                strings.Add("death:sentry");
+                strings.Add("death:acid");
+                strings.Add("death:boulder");
+                strings.Add("death:burner");
+                strings.Add("death:spit");
+                strings.Add("death:spark");
+                strings.Add("death:default");
+            }
+            if (m_Configuration.GetValue<bool>("ban_announcements:enable")) {
+
+                bool includeDuration = m_Configuration.GetValue<bool>("ban_announcements:include_duration");
+                bool includeReason = m_Configuration.GetValue<bool>("ban_announcements:include_reason");
+                if (includeDuration) {
+
+                    if (includeReason) {
+
+                        strings.Add("ban:with_both:0");
+
+                    } else {
+
+                        strings.Add("ban:with_duration:0");
+
+                    }
+
+                } else if (includeReason) {
+
+                    strings.Add("ban:with_reason:0");
+
+                } else {
+
+                    strings.Add("ban:without_info:0");
+
+                }
+
+            }
+
+            foreach (string key in strings) {
+
+                string? str = m_StringLocalizer[key];
+                if (str == null || string.IsNullOrEmpty(str) || str == key) {
+
+                    m_Logger.LogError($"AlvinSoft.UnturnedAnnouncements failed to read the translation key '{key}'!", key);
+                    return false;
+
+                }
+            }
+
+            return true;
+
+        }
+
         protected override async UniTask OnLoadAsync() {
 
             m_Logger.LogInformation(m_StringLocalizer.GetString("plugin_events:plugin_start").Value);
+
+            if (ConfigCheck() == false || TranslationsCheck() == false) {
+                _ = UnloadAsync();
+                return;
+            }
 
             if (m_Configuration.GetValue<bool>("join_announcements:enable") == true) {
                 m_EventBus.Subscribe<IUserConnectedEvent>(this, OnUserConnectedEvent);
