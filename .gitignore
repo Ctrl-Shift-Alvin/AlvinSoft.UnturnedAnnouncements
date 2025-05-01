@@ -4,7 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 SteamCMD
+!SteamCMD/steamcmd.exe
 Server
+!Server/Servers/*
 
 # User-specific files
 *.rsuser
