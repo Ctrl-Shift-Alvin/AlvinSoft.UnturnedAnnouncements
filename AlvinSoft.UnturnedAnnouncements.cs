@@ -80,14 +80,14 @@ namespace AlvinSoft {
 
         public async Task OnUserConnectedEvent(IServiceProvider sender, object? obj, IUserConnectedEvent ev) {
 
-            string message = m_StringLocalizer.GetStrings("join_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
+            string message = m_StringLocalizer.GetStrings("join", new { Player = ev.User.DisplayName }).RandomIndex();
 
             await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["join_announcements:color"]));
 
         }
         public async Task OnUserDisconnectedEvent(IServiceProvider sender, object? obj, IUserDisconnectedEvent ev) {
 
-            string message = m_StringLocalizer.GetStrings("leave_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
+            string message = m_StringLocalizer.GetStrings("leave", new { Player = ev.User.DisplayName }).RandomIndex();
 
             await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["leave_announcements:color"]));
 
@@ -179,7 +179,7 @@ namespace AlvinSoft {
 
             }
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["leave_announcements:color"]));
+            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["ban_announcements:color"]));
 
         }
     }

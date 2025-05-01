@@ -5,12 +5,12 @@ plugin_events:
     plugin_start: "AlvinSoft.Announcements is starting!"
     plugin_stop: "AlvinSoft.Announcements is stopping!"
 
-join_announcements:
+join:
     0: "{Player} has joined the server!"
     1: "{Player} is now online!"
     2: "{Player} has entered the game!"
 
-leave_announcements:
+leave:
     0: "{Player} has left the server!"
     1: "{Player} is now offline!"
     2: "{Player} has exited the game!"
