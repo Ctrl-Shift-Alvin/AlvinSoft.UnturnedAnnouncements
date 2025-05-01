@@ -11,3 +11,6 @@ ban_announcements:
     enable: true
     include_reason: false
     include_duration: true
+
+# en locale is installed by default, for futher locales, you need to install Humanizer.Core.xx (e.g. Humanizer.Core.fr). Some locales are not compatible with Mono and throw.
+locale: "en-US"

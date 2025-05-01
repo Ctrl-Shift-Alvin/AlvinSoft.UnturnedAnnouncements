@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
@@ -14,7 +15,6 @@ using OpenMod.Unturned.Players.Bans.Events;
 using SDG.Unturned;
 using Steamworks;
 using Humanizer;
-using System.Threading.Tasks;
 
 // For more, visit https://openmod.github.io/openmod-docs/devdoc/guides/getting-started.html
 [assembly: PluginMetadata("AlvinSoft.UnturnedAnnouncements", DisplayName = "AlvinSoft Unturned Announcements")]
@@ -35,11 +35,17 @@ namespace AlvinSoft {
             IEventBus eventBus,
             IUserManager userManager) : base(serviceProvider) {
 
+
             m_Configuration = configuration;
             m_StringLocalizer = stringLocalizer;
             m_Logger = logger;
             m_EventBus = eventBus;
             m_UserManager = userManager;
+
+            string locale = m_Configuration.GetValue<string>("locale") ?? "en-US";
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo(locale);
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = new System.Globalization.CultureInfo(locale);
+
         }
 
 
