@@ -50,100 +50,100 @@ ban:
 
     no_reason_string: "something"
 
-death:
-    bleeding:
-        0: ""
-        1: ""
-    bones:
-        0: ""
-        1: ""
-    freezing:
-        0: ""
-        1: ""
-    burning:
-        0: ""
-        1: ""
-    food:
-        0: ""
-        1: ""
-    water:
-        0: ""
-        1: ""
-    gun:
-        0: ""
-        1: ""
-    melee:
-        0: ""
-        1: ""
-    zombie:
-        0: ""
-        1: ""
-    animal:
-        0: ""
-        1: ""
-    suicide:
-        0: ""
-        1: ""
-    kill:
-        0: ""
-        1: ""
-    infection:
-        0: ""
-        1: ""
-    punch:
-        0: ""
-        1: ""
-    breath:
-        0: ""
-        1: ""
-    roadkill:
-        0: ""
-        1: ""
-    vehicle:
-        0: ""
-        1: ""
-    grenade:
-        0: ""
-        1: ""
-    shred:
-        0: ""
-        1: ""
-    landmine:
-        0: ""
-        1: ""
-    arena:
-        0: ""
-        1: ""
-    missile:
-        0: ""
-        1: ""
-    charge:
-        0: ""
-        1: ""
-    splash:
-        0: ""
-        1: ""
-    sentry:
-        0: ""
-        1: ""
-    acid:
-        0: ""
-        1: ""
-    boulder:
-        0: ""
-        1: ""
-    burner:
-        0: ""
-        1: ""
-    spit:
-        0: ""
-        1: ""
-    spark:
-        0: ""
-        1: ""
-    default:
-        0: ""
-        1: ""
+death:  
+   bleeding:  
+       0: "{VictimName} bled out!"  
+       1: "{VictimName} succumbed to their wounds!"  
+   bones:  
+       0: "{VictimName} was crushed by falling debris!"  
+       1: "{VictimName} broke their bones fatally!"  
+   freezing:  
+       0: "{VictimName} froze to death!"  
+       1: "{VictimName} couldn't survive the cold!"  
+   burning:  
+       0: "{VictimName} burned to ashes!"  
+       1: "{VictimName} was consumed by flames!"  
+   food:  
+       0: "{VictimName} starved to death!"  
+       1: "{VictimName} couldn't find food in time!"  
+   water:  
+       0: "{VictimName} died of dehydration!"  
+       1: "{VictimName} couldn't find water to survive!"  
+   gun:  
+       0: "{VictimName} was shot by {KillerName}!"  
+       1: "{KillerName} gunned down {VictimName}!"  
+   melee:  
+       0: "{VictimName} was struck down by {KillerName}!"  
+       1: "{KillerName} defeated {VictimName} in melee combat!"  
+   zombie:  
+       0: "{VictimName} was devoured by zombies!"  
+       1: "{VictimName} couldn't escape the horde!"  
+   animal:  
+       0: "{VictimName} was mauled by a wild animal!"  
+       1: "{VictimName} fell prey to a beast!"  
+   suicide:  
+       0: "{VictimName} took their own life!"  
+       1: "{VictimName} couldn't go on any longer!"  
+   kill:  
+       0: "{VictimName} was killed by {KillerName}!"  
+       1: "{KillerName} ended {VictimName}'s life!"  
+   infection:  
+       0: "{VictimName} succumbed to an infection!"  
+       1: "{VictimName} couldn't fight off the disease!"  
+   punch:  
+       0: "{VictimName} was punched to death by {KillerName}!"  
+       1: "{KillerName} knocked out {VictimName} permanently!"  
+   breath:  
+       0: "{VictimName} suffocated!"  
+       1: "{VictimName} ran out of air!"  
+   roadkill:  
+       0: "{VictimName} was run over by {KillerName}!"  
+       1: "{KillerName} turned {VictimName} into roadkill!"  
+   vehicle:  
+       0: "{VictimName} died in a vehicle accident!"  
+       1: "{VictimName} couldn't survive the crash!"  
+   grenade:  
+       0: "{VictimName} was blown up by {KillerName}'s grenade!"  
+       1: "{KillerName}'s grenade obliterated {VictimName}!"  
+   shred:  
+       0: "{VictimName} was shredded to pieces!"  
+       1: "{VictimName} couldn't escape the sharp edges!"  
+   landmine:  
+       0: "{VictimName} stepped on a landmine!"  
+       1: "{VictimName} was blown up by a landmine!"  
+   arena:  
+       0: "{VictimName} fell in the arena!"  
+       1: "{VictimName} couldn't survive the arena battle!"  
+   missile:  
+       0: "{VictimName} was hit by a missile!"  
+       1: "{VictimName} couldn't dodge the missile!"  
+   charge:  
+       0: "{VictimName} was taken out by an explosive charge!"  
+       1: "{VictimName} couldn't escape the blast!"  
+   splash:  
+       0: "{VictimName} was caught in the explosion!"  
+       1: "{VictimName} was hit by the blast radius!"  
+   sentry:  
+       0: "{VictimName} was shot by a sentry!"  
+       1: "{VictimName} couldn't evade the sentry's fire!"  
+   acid:  
+       0: "{VictimName} was dissolved by acid!"  
+       1: "{VictimName} couldn't survive the acid burns!"  
+   boulder:  
+       0: "{VictimName} was crushed by a boulder!"  
+       1: "{VictimName} couldn't escape the falling rock!"  
+   burner:  
+       0: "{VictimName} was incinerated by a burner!"  
+       1: "{VictimName} couldn't escape the flames!"  
+   spit:  
+       0: "{VictimName} was hit by a toxic spit!"  
+       1: "{VictimName} couldn't survive the toxic attack!"  
+   spark:  
+       0: "{VictimName} was electrocuted!"  
+       1: "{VictimName} couldn't survive the electric shock!"  
+   default:  
+       0: "{VictimName} met an untimely demise!"  
+       1: "{VictimName}'s death remains a mystery!"
 
 unknown_player: "unknown"
 
