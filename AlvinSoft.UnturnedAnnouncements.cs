@@ -53,15 +53,15 @@ namespace AlvinSoft {
 
             m_Logger.LogInformation(m_StringLocalizer.GetString("plugin_events:plugin_start").Value);
 
-            if (m_Configuration.GetValue<bool>("join_announcements") == true) {
+            if (m_Configuration.GetValue<bool>("join_announcements:enable") == true) {
                 m_EventBus.Subscribe<IUserConnectedEvent>(this, OnUserConnectedEvent);
             }
 
-            if (m_Configuration.GetValue<bool>("leave_announcements") == true) {
+            if (m_Configuration.GetValue<bool>("leave_announcements:enable") == true) {
                 m_EventBus.Subscribe<IUserDisconnectedEvent>(this, OnUserDisconnectedEvent);
             }
 
-            if (m_Configuration.GetValue<bool>("death_announcements") == true) {
+            if (m_Configuration.GetValue<bool>("death_announcements:enable") == true) {
 
                 m_EventBus.Subscribe<UnturnedPlayerDeathEvent>(this, OnUnturnedPlayerDeathEvent);
             }
@@ -82,14 +82,14 @@ namespace AlvinSoft {
 
             string message = m_StringLocalizer.GetStrings("join_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.White);
+            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["join_announcements:color"]));
 
         }
         public async Task OnUserDisconnectedEvent(IServiceProvider sender, object? obj, IUserDisconnectedEvent ev) {
 
             string message = m_StringLocalizer.GetStrings("leave_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.White);
+            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["leave_announcements:color"]));
 
         }
         public async Task OnUnturnedPlayerDeathEvent(IServiceProvider sender, object? obj, UnturnedPlayerDeathEvent ev) {
@@ -139,7 +139,7 @@ namespace AlvinSoft {
                 _ => m_StringLocalizer.GetStrings("death:default", new { VictimName, KillerName }).RandomIndex(),
             };
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.Red);
+            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["death_announcements:color"]));
 
         }
         public async Task OnUnturnedPlayerBannedEvent(IServiceProvider sender, object? obj, UnturnedPlayerBannedEvent ev) {
@@ -179,7 +179,7 @@ namespace AlvinSoft {
 
             }
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.Red);
+            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["leave_announcements:color"]));
 
         }
     }

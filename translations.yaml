@@ -2,8 +2,8 @@
 # You can delete this file if you do not need translations
 
 plugin_events:
-    plugin_start: "AlvinSoft.Announcements was started!"
-    plugin_stop: "AlvinSoft.Announcements was stopped!"
+    plugin_start: "AlvinSoft.Announcements is starting!"
+    plugin_stop: "AlvinSoft.Announcements is stopping!"
 
 join_announcements:
     0: "{Player} has joined the server!"

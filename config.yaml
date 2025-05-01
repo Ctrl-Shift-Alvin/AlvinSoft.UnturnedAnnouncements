@@ -1,16 +1,23 @@
 # See https://openmod.github.io/openmod-docs/devdoc/concepts/configuration.html
 # You can delete this file if you do not need a configuration
 
-join_announcements: true
+join_announcements:
+    enable: true
+    color: "#00FF00"
 
-leave_announcements: true
+leave_announcements:
+    enable: true
+    color: "#FF0000"
 
-death_announcements: true
+death_announcements:
+    enable: true
+    color: "#FF0000"
 
 ban_announcements:
     enable: true
     include_reason: false
     include_duration: true
+    color: "#FF0000"
 
 # en locale is installed by default, for futher locales, you need to install Humanizer.Core.xx (e.g. Humanizer.Core.fr). Some locales are not compatible with Mono and throw.
 locale: "en-US"
