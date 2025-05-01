@@ -2,28 +2,18 @@
 # You can delete this file if you do not need translations
 
 plugin_events:
-  plugin_start: "AlvinSoft.Announcements was started!"
-  plugin_stop: "AlvinSoft.Announcements was stopped!"
+    plugin_start: "AlvinSoft.Announcements was started!"
+    plugin_stop: "AlvinSoft.Announcements was stopped!"
 
-join:
-    join_messages:
-        0: "Welcome to the server, {Player}!"
-        1: "Hello {Player}, enjoy your stay!"
-        2: "Greetings {Player}, have fun playing!"
-    join_announcements:
-        0: "{Player} has joined the server!"
-        1: "{Player} is now online!"
-        2: "{Player} has entered the game!"
+join_announcements:
+    0: "{Player} has joined the server!"
+    1: "{Player} is now online!"
+    2: "{Player} has entered the game!"
 
-leave:
-    leave_messages:
-        0: "Goodbye {Player}, see you next time!"
-        1: "Farewell {Player}, take care!"
-        2: "See you later {Player}, come back soon!"
-    leave_announcements:
-        0: "{Player} has left the server!"
-        1: "{Player} is now offline!"
-        2: "{Player} has exited the game!"
+leave_announcements:
+    0: "{Player} has left the server!"
+    1: "{Player} is now offline!"
+    2: "{Player} has exited the game!"
 
 ban:
     without_info:
@@ -43,12 +33,11 @@ ban:
         1: "{Player} has been banned from the server for {Duration}, for '{Reason}'!"
         2: "{Player} is now banned for {Duration}, for '{Reason}'!"
 
-    permanent_duration_string:
+    permanent_duration_string: # Used when the ban duration is 0, aka. permanent, to replace {Duration}
         0: "permanently"
         1: "forever"
         2: "for life"
-
-    no_reason_string: "something"
+    no_reason_string: "something" # Used when a ban reason is not provided
 
 death:  
    bleeding:  
@@ -145,6 +134,6 @@ death:
        0: "{VictimName} met an untimely demise!"  
        1: "{VictimName}'s death remains a mystery!"
 
-unknown_player: "unknown"
+unknown_player: "unknown" # Used when the player name cannot be retrieved
 
     

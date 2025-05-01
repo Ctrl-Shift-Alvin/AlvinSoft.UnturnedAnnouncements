@@ -80,14 +80,14 @@ namespace AlvinSoft {
 
         public async Task OnUserConnectedEvent(IServiceProvider sender, object? obj, IUserConnectedEvent ev) {
 
-            string message = m_StringLocalizer.GetStrings("join:join_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
+            string message = m_StringLocalizer.GetStrings("join_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
 
             await m_UserManager.BroadcastAsync(message, System.Drawing.Color.White);
 
         }
         public async Task OnUserDisconnectedEvent(IServiceProvider sender, object? obj, IUserDisconnectedEvent ev) {
 
-            string message = m_StringLocalizer.GetStrings("leave:leave_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
+            string message = m_StringLocalizer.GetStrings("leave_announcements", new { Player = ev.User.DisplayName }).RandomIndex();
 
             await m_UserManager.BroadcastAsync(message, System.Drawing.Color.White);
 
