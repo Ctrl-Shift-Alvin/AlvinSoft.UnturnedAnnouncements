@@ -94,37 +94,37 @@ namespace AlvinSoft {
                 strings.Add("leave:0");
             }
             if (m_Configuration.GetValue<bool>("death_announcements:enable")) {
-                strings.Add("death:bleeding");
-                strings.Add("death:bones");
-                strings.Add("death:freezing");
-                strings.Add("death:burning");
-                strings.Add("death:food");
-                strings.Add("death:water");
-                strings.Add("death:gun");
-                strings.Add("death:melee");
-                strings.Add("death:zombie");
-                strings.Add("death:animal");
-                strings.Add("death:suicide");
-                strings.Add("death:kill");
-                strings.Add("death:infection");
-                strings.Add("death:punch");
-                strings.Add("death:breath");
-                strings.Add("death:roadkill");
-                strings.Add("death:vehicle");
-                strings.Add("death:grenade");
-                strings.Add("death:shred");
-                strings.Add("death:landmine");
-                strings.Add("death:arena");
-                strings.Add("death:missile");
-                strings.Add("death:charge");
-                strings.Add("death:splash");
-                strings.Add("death:sentry");
-                strings.Add("death:acid");
-                strings.Add("death:boulder");
-                strings.Add("death:burner");
-                strings.Add("death:spit");
-                strings.Add("death:spark");
-                strings.Add("death:default");
+                strings.Add("death:bleeding:0");
+                strings.Add("death:bones:0");
+                strings.Add("death:freezing:0");
+                strings.Add("death:burning:0");
+                strings.Add("death:food:0");
+                strings.Add("death:water:0");
+                strings.Add("death:gun:0");
+                strings.Add("death:melee:0");
+                strings.Add("death:zombie:0");
+                strings.Add("death:animal:0");
+                strings.Add("death:suicide:0");
+                strings.Add("death:kill:0");
+                strings.Add("death:infection:0");
+                strings.Add("death:punch:0");
+                strings.Add("death:breath:0");
+                strings.Add("death:roadkill:0");
+                strings.Add("death:vehicle:0");
+                strings.Add("death:grenade:0");
+                strings.Add("death:shred:0");
+                strings.Add("death:landmine:0");
+                strings.Add("death:arena:0");
+                strings.Add("death:missile:0");
+                strings.Add("death:charge:0");
+                strings.Add("death:splash:0");
+                strings.Add("death:sentry:0");
+                strings.Add("death:acid:0");
+                strings.Add("death:boulder:0");
+                strings.Add("death:burner:0");
+                strings.Add("death:spit:0");
+                strings.Add("death:spark:0");
+                strings.Add("death:default:0");
             }
             if (m_Configuration.GetValue<bool>("ban_announcements:enable")) {
 
