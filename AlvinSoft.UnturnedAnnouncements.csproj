@@ -12,7 +12,7 @@
 
 	<PropertyGroup>
 		<PackageId>AlvinSoft.UnturnedAnnouncements</PackageId>
-		<PackageDescription>An OpenMod Unturned plugin for join/leave/death/ban messages and announcements. Allows multiple strings per announcement/message type, and selects randomly.</PackageDescription>
+		<PackageDescription>An OpenMod Unturned plugin for join/leave/death/ban announcements. Allows multiple strings per announcement type, and selects randomly.</PackageDescription>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageAuthor>AlvinSoft</PackageAuthor>
 		<PackageTags>openmod openmod-plugin unturned</PackageTags>
