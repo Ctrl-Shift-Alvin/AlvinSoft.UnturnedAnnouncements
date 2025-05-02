@@ -52,16 +52,16 @@ namespace AlvinSoft {
         private bool ConfigCheck() {
 
             string[] configKeys = new string[] {
-                "join:enable",
-                "join:color",
-                "leave:enable",
-                "leave:color",
-                "death:enable",
-                "death:color",
-                "ban:enable",
-                "ban:include_duration",
-                "ban:include_reason",
-                "ban:color"
+                "join_announcements:enable",
+                "join_announcements:color",
+                "leave_announcements:enable",
+                "leave_announcements:color",
+                "death_announcements:enable",
+                "death_announcements:color",
+                "ban_announcements:enable",
+                "ban_announcements:include_duration",
+                "ban_announcements:include_reason",
+                "ban_announcements:color"
             };
 
             foreach (string key in configKeys) {
