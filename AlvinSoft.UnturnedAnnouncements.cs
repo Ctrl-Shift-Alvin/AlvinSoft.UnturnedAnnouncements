@@ -15,6 +15,7 @@ using OpenMod.Unturned.Players.Bans.Events;
 using SDG.Unturned;
 using Steamworks;
 using Humanizer;
+using System.Drawing;
 
 // For more, visit https://openmod.github.io/openmod-docs/devdoc/guides/getting-started.html
 [assembly: PluginMetadata("AlvinSoft.UnturnedAnnouncements", DisplayName = "AlvinSoft Unturned Announcements")]
@@ -26,6 +27,7 @@ namespace AlvinSoft {
         private readonly ILogger<UnturnedAnnouncements> m_Logger; //logger
         private readonly IEventBus m_EventBus; //events
         private readonly IUserManager m_UserManager; //users
+        private readonly ColorConverter m_Colors; //color converter
 
         public UnturnedAnnouncements(
             IConfiguration configuration,
@@ -41,6 +43,7 @@ namespace AlvinSoft {
             m_Logger = logger;
             m_EventBus = eventBus;
             m_UserManager = userManager;
+            m_Colors = new ColorConverter();
 
             string locale = m_Configuration.GetValue<string>("locale") ?? "en-US";
             System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo(locale);
@@ -207,14 +210,14 @@ namespace AlvinSoft {
 
             string message = m_StringLocalizer.GetStrings("join", new { Player = ev.User.DisplayName }).RandomIndex();
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["join_announcements:color"]));
+            await m_UserManager.BroadcastAsync(message, (Color)m_Colors.ConvertFromString(m_Configuration["join_announcements:color"]));
 
         }
         public async Task OnUserDisconnectedEvent(IServiceProvider sender, object? obj, IUserDisconnectedEvent ev) {
 
             string message = m_StringLocalizer.GetStrings("leave", new { Player = ev.User.DisplayName }).RandomIndex();
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["leave_announcements:color"]));
+            await m_UserManager.BroadcastAsync(message, (Color)m_Colors.ConvertFromString(m_Configuration["leave_announcements:color"]));
 
         }
         public async Task OnUnturnedPlayerDeathEvent(IServiceProvider sender, object? obj, UnturnedPlayerDeathEvent ev) {
@@ -264,7 +267,7 @@ namespace AlvinSoft {
                 _ => m_StringLocalizer.GetStrings("death:default", new { VictimName, KillerName }).RandomIndex(),
             };
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["death_announcements:color"]));
+            await m_UserManager.BroadcastAsync(message, (Color)m_Colors.ConvertFromString(m_Configuration["death_announcements:color"]));
 
         }
         public async Task OnUnturnedPlayerBannedEvent(IServiceProvider sender, object? obj, UnturnedPlayerBannedEvent ev) {
@@ -304,7 +307,7 @@ namespace AlvinSoft {
 
             }
 
-            await m_UserManager.BroadcastAsync(message, System.Drawing.Color.FromName(m_Configuration["ban_announcements:color"]));
+            await m_UserManager.BroadcastAsync(message, (Color)m_Colors.ConvertFromString(m_Configuration["ban_announcements:color"]));
 
         }
     }
